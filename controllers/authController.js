@@ -41,9 +41,9 @@ export const login = async (req, res) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false, //部署後 改成 true
-    maxAge: 240 * 240 * 1000,
-    /// sameSite: "None", 部署後增加
+    sameSite: "Lax",
+    secure: false, // 需要 HTTPS
+    maxAge: 24 * 60 * 60 * 1000,
   });
 
   res.json({
@@ -68,7 +68,7 @@ export const logout = (req, res) => {
 
 // 檢查個人資訊
 export const profile = (req, res) => {
-  const username = req.user.username;
+  const username = req.query.username;
   const user = users.find((u) => u.username === username);
   if (!user) return res.status(404).json({ message: "user not found" });
 
@@ -83,7 +83,7 @@ export const profile = (req, res) => {
 
 // 尋找其他人資料
 export const searchprofile = (req, res) => {
-  const username = req.query.username;
+  const username = req.query;
   const user = users.find((u) => u.username === username);
   if (!user) return res.status(404).json({ message: "Player not found" });
 

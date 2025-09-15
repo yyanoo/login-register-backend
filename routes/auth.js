@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
-router.get("/profile", authMiddleware, profile);
+router.get("/profile", profile);
 router.get("/searchprofile", authMiddleware, searchprofile);
 
 export default router;
